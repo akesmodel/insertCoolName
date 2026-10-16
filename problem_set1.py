@@ -15,7 +15,7 @@ def candy_shop():
     list = ["Heath Bar", "Sour Patch Watermelon", "Lindor"]
     list.append("Kitkat")
     list.insert(1, "Reese's Cups")
-    list.sort
+    list.sort()
     list.remove("Kitkat")
     print(list)
     user_candies=[]
@@ -29,8 +29,8 @@ def candy_shop():
     print(len(all_candies))
     for i in range(len(all_candies)):
         print(all_candies[i])
-    return(1.25*len(all_candies))
     print((1.25*len(all_candies)))
+    return(1.25*len(all_candies))
 
 
     
