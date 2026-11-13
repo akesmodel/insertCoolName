@@ -25,9 +25,11 @@ def main(): #runs everything
         print("b) See your grades for a specific class?")
         print("c) See your GPA?")
         print("d) Add a test score for a class?")
-        choice=input("(a/b/c/d) ")
+        print("e) Remove a grade?")
+        choice=input("(a/b/c/d/e) ")
         if (choice=="a"):
             print_all_averages()
+            visualize_grades()
         elif (choice=="b"):
             Subject=input("Which subject do you want to see your grades in? ")
             if (Subject in dictionary.keys()):
@@ -36,7 +38,7 @@ def main(): #runs everything
                 print("Yikes! Sorry, you're going to have to register that class first!") 
         elif (choice=="c"):
             print("Your GPA is: "+get_GPA())
-        else:
+        elif (choice=="d"):
             print("Your current classes are: ")
             classes = ""
             for key in dictionary.keys():
@@ -45,6 +47,9 @@ def main(): #runs everything
             grade=float(input("What grade did you get on that test? "))
             add_grade(Subject,grade)
             print("Your new average in "+Subject+" is: "+ (str)(get_average(Subject)))
+        else:
+            Subject= input("What class would you like to remove a grade from? ")
+            grade= input("What grade would you like to remove? ")
         keep_going=input("Would you like to do anything else? (y/n) ")
         if keep_going=="n":
             good=True
@@ -123,12 +128,20 @@ def get_GPA(): #Calculates the average of each of your averages (using the same 
         return "F (0.0)"
 def remove_grade(Subject, grade):
     if (Subject in dictionary.keys()):
-        if ( ): #be specific here
-
+        if (grade in dictionary.get(Subject)): #be specific here
+            dictionary[Subject]=dictionary.get(Subject).remove(grade)
         else:
             print("I don't think you ever got that grade, sorry!")
     else: #user feedback for the main method
         print("Yikes! Sorry, you're going to have to register that class first!") 
+def visualize_grades(): #
+    for key in dictionary.keys():
+        toPrint="X"
+        c= float(get_average(key))
+        d= (int)((c-47.5)/5)
+        for i in range(d):
+            toPrint+="*"
+        print(toPrint)
 
         
 
