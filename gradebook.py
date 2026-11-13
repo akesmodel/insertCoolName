@@ -1,9 +1,22 @@
-dictionary = { #Our starting set of classes and grades, user can add more classes and grades
-    "Math": [97, 97, 97, 93],
-    "English": [86, 94, 92],
-    "History": [74, 83, 79, 65], 
-    "Comp Sci": [100,100,100,100], #Please make this happen Miss Bono 🥹 
-}
+import csv
+
+dictionary = {}
+with open('grades.csv','r') as f:
+    data = csv.reader(f)
+    for row in data:
+        if row:
+            key = row[0] # first column = key
+            values = row[1:] # py list splice = values
+            values = [float(item) for item in values]
+
+            dictionary[key] = values
+
+# dictionary = { #Our starting set of classes and grades, user can add more classes and grades
+#     "Math": [97, 97, 97, 93],
+#     "English": [86, 94, 92],
+#     "History": [74, 83, 79, 65], 
+#     "Comp Sci": [100,100,100,100], #Please make this happen Miss Bono 🥹 
+# }
 def main(): #runs everything
     good=False
     while (good==False): #Keeps the program running, so the user can make as many changes as they need. Once they're done, the loop stops and the program terminates
@@ -17,21 +30,34 @@ def main(): #runs everything
             print_all_averages()
         elif (choice=="b"):
             Subject=input("Which subject do you want to see your grades in? ")
-            print_grades(Subject)
+            if (Subject in dictionary.keys()):
+                print_grades(Subject)
+            else: #user feedback for the main method
+                print("Yikes! Sorry, you're going to have to register that class first!") 
         elif (choice=="c"):
             print("Your GPA is: "+get_GPA())
         else:
-            Subject=input("Which subject do you want to add a grade for? ")
-            grade=input("What grade did you get on that test? ")
+            print("Your current classes are: ")
+            classes = ""
+            for key in dictionary.keys():
+                print(key)
+            Subject=input("Which subject do you want to add a grade for? ").lower()
+            grade=float(input("What grade did you get on that test? "))
             add_grade(Subject,grade)
             print("Your new average in "+Subject+" is: "+ (str)(get_average(Subject)))
         keep_going=input("Would you like to do anything else? (y/n) ")
         if keep_going=="n":
             good=True
+    with open('grades.csv', 'w', newline="") as file:
+        writer = csv.writer(file)
+        # iter thru keys AND values in dataset, write to csv
+        for key, value in dictionary.items():
+            writer.writerow([key] + value)   
     print("Have a great day!")
 def add_grade(Subject, grade): #If the subject exists, we add that grade to its values, and if not, we create a new key in dictionary corresponding to that subject
     if (Subject not in dictionary.keys()): #weird troubleshoot to see if subject exists or not.
         dictionary[Subject]= [grade] #if if doesnt exist, we initialize its list to contain the single grade value.
+        print("Creating class...") #User interaction for this method
     else:
         dictionary[Subject].append(grade)
 def get_average(Subject): #A method that returns the average, a helper method I wrote, because print average doesn't save the average. 
@@ -95,6 +121,15 @@ def get_GPA(): #Calculates the average of each of your averages (using the same 
         return "D (1.0)"
     else:
         return "F (0.0)"
+def remove_grade(Subject, grade):
+    if (Subject in dictionary.keys()):
+        if ( ): #be specific here
+
+        else:
+            print("I don't think you ever got that grade, sorry!")
+    else: #user feedback for the main method
+        print("Yikes! Sorry, you're going to have to register that class first!") 
+
         
 
 
