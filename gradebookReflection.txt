@@ -1,0 +1,11 @@
+The data is numererical, since averages are manipulatable variables.
+It's also small data---only one computer caches it.
+
+We collect data through the user's input, 
+cache it into the csv file,
+clean it by examining averages,
+conclude it by comparing different grades with each other,
+and convey it by visually representing averages and comparisons to the user.
+
+We can next ask how previous grades influence future grades--
+that is, rather than just compiling data, we use it to help get kids' grades up. 
