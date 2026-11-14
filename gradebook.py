@@ -11,12 +11,6 @@ with open('grades.csv','r') as f:
 
             dictionary[key] = values
 
-# dictionary = { #Our starting set of classes and grades, user can add more classes and grades
-#     "Math": [97, 97, 97, 93],
-#     "English": [86, 94, 92],
-#     "History": [74, 83, 79, 65], 
-#     "Comp Sci": [100,100,100,100], #Please make this happen Miss Bono 🥹 
-# }
 def main(): #runs everything
     good=False
     while (good==False): #Keeps the program running, so the user can make as many changes as they need. Once they're done, the loop stops and the program terminates
@@ -31,7 +25,7 @@ def main(): #runs everything
             print_all_averages()
             visualize_grades()
         elif (choice=="b"):
-            Subject=input("Which subject do you want to see your grades in? ")
+            Subject=input("Which subject do you want to see your grades in? ").lower()
             if (Subject in dictionary.keys()):
                 print_grades(Subject)
             else: #user feedback for the main method
@@ -48,8 +42,9 @@ def main(): #runs everything
             add_grade(Subject,grade)
             print("Your new average in "+Subject+" is: "+ (str)(get_average(Subject)))
         else:
-            Subject= input("What class would you like to remove a grade from? ")
+            Subject= input("What class would you like to remove a grade from? ").lower()
             grade= input("What grade would you like to remove? ")
+            remove_grade(Subject,grade)
         keep_going=input("Would you like to do anything else? (y/n) ")
         if keep_going=="n":
             good=True
@@ -59,6 +54,9 @@ def main(): #runs everything
         for key, value in dictionary.items():
             writer.writerow([key] + value)   
     print("Have a great day!")
+
+
+    
 def add_grade(Subject, grade): #If the subject exists, we add that grade to its values, and if not, we create a new key in dictionary corresponding to that subject
     if (Subject not in dictionary.keys()): #weird troubleshoot to see if subject exists or not.
         dictionary[Subject]= [grade] #if if doesnt exist, we initialize its list to contain the single grade value.
@@ -128,8 +126,8 @@ def get_GPA(): #Calculates the average of each of your averages (using the same 
         return "F (0.0)"
 def remove_grade(Subject, grade):
     if (Subject in dictionary.keys()):
-        if (grade in dictionary.get(Subject)): #be specific here
-            dictionary[Subject]=dictionary.get(Subject).remove(grade)
+        if (float(grade) in dictionary.get(Subject)): #be specific here
+            dictionary[Subject].remove(float(grade))
         else:
             print("I don't think you ever got that grade, sorry!")
     else: #user feedback for the main method
